@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BookApiServiceService } from 'src/app/service/book-api-service.service';
+import { ProductServiceService } from 'src/app/service/product-service.service';
 
 
 @Component({
@@ -10,7 +11,7 @@ import { BookApiServiceService } from 'src/app/service/book-api-service.service'
 })
 export class ProductComponent {
 
-constructor(private router:ActivatedRoute , private service:BookApiServiceService){}
+constructor(private router:ActivatedRoute , private service:BookApiServiceService,private productService: ProductServiceService){}
 
   getOneBookDetail:any
 
@@ -26,6 +27,11 @@ constructor(private router:ActivatedRoute , private service:BookApiServiceServic
       console.log(result,"one book result")
       this.getOneBookDetail=result
     })
+  }
+
+  //add to cart items
+  addToCart(product: any) {
+    this.productService.addToCart(product);
   }
 
 
