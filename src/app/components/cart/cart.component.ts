@@ -31,20 +31,24 @@ export class CartComponent {
     console.log(this.localStorageItem, 4567);
   }
 
-  decrement() {
-    if (this.count !== 1) {
-      this.count--;
+  decrement(index:number) {
+    if (this.localStorageItem[index].quantity>0) {
+      this.localStorageItem[index].quantity--
+      localStorage.setItem('cart', JSON.stringify(this.localStorageItem));
     }
   }
+  
+  increment(index: number) {
+    this.localStorageItem[index].quantity++
+    localStorage.setItem('cart', JSON.stringify(this.localStorageItem));
 
-  increment() {
-    this.count++;
   }
 
   changepositive() {
     if (this.count <= 0) {
       this.count = 1;
     }
+
   }
 
   deleteItem(index: number) {
