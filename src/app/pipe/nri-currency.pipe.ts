@@ -5,13 +5,21 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class NriCurrencyPipe implements PipeTransform {
 
-  
-    transform(value: string): string {
-    // Extract the numeric value from the string
-    const numericValue = parseFloat(value.replace(/[^\d.-]/g, ''));
+  // transform(value: unknown, ...args: unknown[]): unknown {
+  //   return null;
+  // }
 
-    // Format the numeric value with the currency symbol (₹) and return
-    return `₹${numericValue}`;
+  transform(value: string): string {
+    // Remove the currency symbol ($) and any thousand separators (,) from the string
+    const numericValue = value.replace(/[$,]/g, '');
+
+    // Convert the numeric value back to a number
+    const numericAmount = parseFloat(numericValue);
+
+    // Format the numeric value using the Indian numbering system (en-IN locale)
+    const nriFormatted = new Intl.NumberFormat('en-IN').format(numericAmount);
+
+    return nriFormatted;
   }
 
 

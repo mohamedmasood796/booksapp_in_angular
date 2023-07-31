@@ -20,4 +20,8 @@ export class BookApiServiceService {
   oneBookApiData(id:any):Observable<any>{
     return this.http.get(`${this.baseurl}/books/${id}`)
   }
+
+  
+
+
 }
