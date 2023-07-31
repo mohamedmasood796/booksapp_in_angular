@@ -5,19 +5,19 @@ import { ProductServiceService } from 'src/app/service/product-service.service';
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.css']
+  styleUrls: ['./cart.component.css'],
 })
 export class CartComponent {
+  constructor(
+    private productService: ProductServiceService,
+    private service: BookApiServiceService
+  ) {}
 
-  constructor( private productService: ProductServiceService,private service: BookApiServiceService){
-
-  }
-
-  public count:number=1
+  public count!: number;
 
   cartItems: any[] = [];
-  localStorageItem:any
-
+  localStorageItem: any;
+  // localStorageItem!: any[];
 
   ngOnInit() {
     // Load cart data from localStorage when the component initializes
@@ -25,30 +25,31 @@ export class CartComponent {
   }
 
   loadCartData() {
-   const result= this.productService.getDataFromLs()
-      console.log(result,"localsotrage result")
-      this.localStorageItem=result
-      console.log(this.localStorageItem,4567)
+    const result = this.productService.getDataFromLs();
+    console.log(result, 'localsotrage result');
+    this.localStorageItem = result;
+    console.log(this.localStorageItem, 4567);
   }
 
-  decrement(){
-    if(this.count!==1){
-      this.count--
+  decrement() {
+    if (this.count !== 1) {
+      this.count--;
     }
   }
 
-  increment(){
-    this.count++
+  increment() {
+    this.count++;
   }
 
-  changepositive(){
-    if(this.count<=0){
-      this.count=1
+  changepositive() {
+    if (this.count <= 0) {
+      this.count = 1;
     }
   }
 
-
-  
-  
-
+  deleteItem(index: number) {
+    // Remove the item from the displayed array
+    this.localStorageItem.splice(index, 1);
+    localStorage.setItem('cart', JSON.stringify(this.localStorageItem));
+  }
 }

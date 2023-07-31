@@ -9,18 +9,16 @@ export class NriCurrencyPipe implements PipeTransform {
   //   return null;
   // }
 
+   
   transform(value: string): string {
-    // Remove the currency symbol ($) and any thousand separators (,) from the string
-    const numericValue = value.replace(/[$,]/g, '');
-
-    // Convert the numeric value back to a number
-    const numericAmount = parseFloat(numericValue);
-
-    // Format the numeric value using the Indian numbering system (en-IN locale)
-    const nriFormatted = new Intl.NumberFormat('en-IN').format(numericAmount);
-
-    return nriFormatted;
+    // Extract the numeric value from the string
+    const numericValue = parseFloat(value.replace(/[^\d.-]/g, ''));
+    const exchangeRateUSDToINR=75.5
+    let indianRupeesAmount = Math.floor(numericValue * exchangeRateUSDToINR)
+    // Format the numeric value with the currency symbol (₹) and return
+    return `₹${indianRupeesAmount}`;
   }
 
+  
 
 }
