@@ -2,42 +2,43 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductServiceService {
-
-  constructor() { }
+  constructor() {}
 
   private cartItems: any[] = [];
 
   addToCart(product: any) {
     const storedCartItems = localStorage.getItem('cart');
-    console.log(storedCartItems,"card is god",2222222222222222222222222)
-    if(storedCartItems){
-      // if(product.isbn13===storedCartItems?.isbn13){
-      //   console.log('this product is aldrey have')
-      // }
+   
+    const cartItems: any[] = storedCartItems ? JSON.parse(storedCartItems) : [];
 
-    }else{
-      console.log(product,"add ot cart product",44444444444444444444)
+    let changed = false
+
+    cartItems.map((item) => {
+      if (item.isbn13 === product.isbn13) {
+        item.quantity += 1;
+        changed = true
+      }
+    });
+    
+    if (changed) {
+      localStorage.setItem('cart',JSON.stringify(cartItems))
+    } else {
       this.cartItems.push(product);
       localStorage.setItem('cart', JSON.stringify(this.cartItems));
     }
+   
   }
 
-
-  getDataFromLs():any{
+  getDataFromLs(): any {
     const storedCartItems = localStorage.getItem('cart');
-    console.log(storedCartItems,"stored cart items")
+    console.log(storedCartItems, 'stored cart items');
     if (storedCartItems) {
-     this.cartItems = JSON.parse(storedCartItems);
-     return this.cartItems
+      this.cartItems = JSON.parse(storedCartItems);
+      return this.cartItems;
     }
-    return
-    
+    return;
   }
-
-
-  
-
 }
