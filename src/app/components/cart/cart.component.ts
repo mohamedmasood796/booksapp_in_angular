@@ -1,3 +1,4 @@
+import { ToastrServiceService } from './../../service/toastr.service';
 import { Component } from '@angular/core';
 import { BookApiServiceService } from 'src/app/service/book-api-service.service';
 import { ProductServiceService } from 'src/app/service/product-service.service';
@@ -10,10 +11,12 @@ import { ProductServiceService } from 'src/app/service/product-service.service';
 export class CartComponent {
   constructor(
     private productService: ProductServiceService,
-    private service: BookApiServiceService
+    private service: BookApiServiceService,
+    private ToastrService : ToastrServiceService
   ) {}
 
   public count!: number;
+  
 
   cartItems: any[] = [];
   localStorageItem: any;
@@ -26,22 +29,22 @@ export class CartComponent {
 
   loadCartData() {
     const result = this.productService.getDataFromLs();
-    console.log(result, 'localsotrage result');
     this.localStorageItem = result;
-    console.log(this.localStorageItem, 4567);
+
   }
 
   decrement(index:number) {
-    if (this.localStorageItem[index].quantity>0) {
+    if(this.localStorageItem[index].quantity>1){
       this.localStorageItem[index].quantity--
-      localStorage.setItem('cart', JSON.stringify(this.localStorageItem));
+      this.productService.decrement( this.localStorageItem)
     }
   }
   
   increment(index: number) {
-    this.localStorageItem[index].quantity++
-    localStorage.setItem('cart', JSON.stringify(this.localStorageItem));
 
+    this.localStorageItem[index].quantity++
+    this.productService.increment(this.localStorageItem)
+    
   }
 
   changepositive() {
@@ -53,7 +56,7 @@ export class CartComponent {
 
   deleteItem(index: number) {
     // Remove the item from the displayed array
-    this.localStorageItem.splice(index, 1);
-    localStorage.setItem('cart', JSON.stringify(this.localStorageItem));
+    this.productService.deleteItem(index , this.localStorageItem)
+    
   }
 }

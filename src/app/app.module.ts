@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http'
+import {  HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http'
 import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr'; 
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -14,6 +16,8 @@ import { CartComponent } from './components/cart/cart.component';
 import { ProductComponent } from './components/product/product.component';
 import { BookApiServiceService } from './service/book-api-service.service';
 import { NriCurrencyPipe } from './pipe/nri-currency.pipe';
+import { Page404Component } from './components/page404/page404.component';
+import { ErrorHandlingInterceptor } from './core/Interceptor';
 
 @NgModule({
   declarations: [
@@ -24,16 +28,19 @@ import { NriCurrencyPipe } from './pipe/nri-currency.pipe';
     BannerComponent,
     CartComponent,
     ProductComponent,
-    NriCurrencyPipe
+    NriCurrencyPipe,
+    Page404Component
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(), 
   
   ],
-  providers: [BookApiServiceService],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: ErrorHandlingInterceptor,multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,3 +1,4 @@
+import { ToastrServiceService } from './toastr.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -5,40 +6,59 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ProductServiceService {
-  constructor() {}
+  constructor(protected Toastrservice:ToastrServiceService) {}
 
   private cartItems: any[] = [];
 
   addToCart(product: any) {
     const storedCartItems = localStorage.getItem('cart');
-   
+
     const cartItems: any[] = storedCartItems ? JSON.parse(storedCartItems) : [];
 
-    let changed = false
+    let changed = false;
 
     cartItems.map((item) => {
       if (item.isbn13 === product.isbn13) {
         item.quantity += 1;
-        changed = true
+        changed = true;
       }
     });
-    
+
     if (changed) {
-      localStorage.setItem('cart',JSON.stringify(cartItems))
+      localStorage.setItem('cart', JSON.stringify(cartItems));
+      this.Toastrservice.showSuccess(' This product already exist ! quantity increased.');
     } else {
       this.cartItems.push(product);
       localStorage.setItem('cart', JSON.stringify(this.cartItems));
+      this.Toastrservice.showSuccess(' Successfully added to cart.');
     }
-   
   }
 
   getDataFromLs(): any {
     const storedCartItems = localStorage.getItem('cart');
-    console.log(storedCartItems, 'stored cart items');
     if (storedCartItems) {
       this.cartItems = JSON.parse(storedCartItems);
       return this.cartItems;
     }
     return;
   }
+
+  decrement(localStorageItem: any) {
+      localStorage.setItem('cart', JSON.stringify(localStorageItem));
+      this.Toastrservice.showSuccess(' Quantity Decremented.');
+    
+  }
+
+  increment(localStorageItem:any){
+    localStorage.setItem('cart', JSON.stringify(localStorageItem));
+    this.Toastrservice.showSuccess(' Quantity Incremented.');
+  }
+
+  deleteItem(index:number,localStorageItem:any){
+    localStorageItem.splice(index, 1);
+    localStorage.setItem('cart', JSON.stringify(localStorageItem));
+    this.Toastrservice.showError('product is deleted')
+  }
+
+
 }
