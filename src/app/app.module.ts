@@ -18,6 +18,7 @@ import { BookApiServiceService } from './service/book-api-service.service';
 import { NriCurrencyPipe } from './pipe/nri-currency.pipe';
 import { Page404Component } from './components/page404/page404.component';
 import { ErrorHandlingInterceptor } from './core/Interceptor';
+import { EmptyCartComponent } from './components/empty-cart/empty-cart.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ErrorHandlingInterceptor } from './core/Interceptor';
     CartComponent,
     ProductComponent,
     NriCurrencyPipe,
-    Page404Component
+    Page404Component,
+    EmptyCartComponent
   ],
   imports: [
     BrowserModule,

@@ -8,7 +8,7 @@
             
           </div>
   
-          <div class="card rounded-3 mb-4 shadow p-3 mb-5 bg-white rounded">
+          <div class="card rounded-3 mb-4 shadow p-3 mb-5 bg-white rounded" *ngIf="localStorageItem.length>0 else emptycart">
             <div class="card-body p-4" *ngFor="let item of localStorageItem; let i = index">
               <div class="row d-flex justify-content-between align-items-center">
                 <div class="col-md-2 col-lg-2 col-xl-2" >
@@ -41,6 +41,10 @@
               </div>
             </div>
           </div>
+          <ng-template #emptycart>
+            <app-empty-cart></app-empty-cart>
+          </ng-template>
+
   
         </div>
       </div>

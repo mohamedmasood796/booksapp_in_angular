@@ -1,0 +1,25 @@
+.empty-cart {
+    text-align: center;
+    padding: 40px;
+  }
+  
+  .empty-cart h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .empty-cart p {
+    font-size: 18px;
+    color: #888;
+  }
+
+  
+  .home-link {
+    color: #007bff;
+    text-decoration: none;
+  }
+
+  .home-link:hover {
+    text-decoration: underline;
+  }
+  
