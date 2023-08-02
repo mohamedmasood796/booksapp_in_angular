@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { BookApiServiceService } from 'src/app/service/book-api-service.service';
+import { Books } from 'src/app/Interface/interface';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class CardComponent {
 
   }
 
-  booksResult:any=[]
+  booksResult:Books[]=[]
 
   //get book data
   getBooksData(){

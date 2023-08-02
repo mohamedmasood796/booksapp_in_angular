@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Books } from 'src/app/Interface/interface';
 import { BookApiServiceService } from 'src/app/service/book-api-service.service';
 import { ProductServiceService } from 'src/app/service/product-service.service';
 
@@ -33,7 +34,7 @@ export class ProductComponent {
   }
 
   //add to cart items
-  addToCart(product: any) {
+  addToCart(product: Books) {
     let productDetails = {
       image:product.image,
       title:product.title,
@@ -41,7 +42,9 @@ export class ProductComponent {
       language:product.language,
       price:product.price,
       isbn13:product.isbn13,
-      quantity:1
+      quantity:1,
+      publisher:product.publisher,
+      pages:product.pages
     }
     this.productService.addToCart(productDetails);
     this.route.navigate(['/cart']);

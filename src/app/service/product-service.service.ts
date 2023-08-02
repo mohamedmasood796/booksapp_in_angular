@@ -1,3 +1,4 @@
+import { Books } from 'src/app/Interface/interface';
 import { ToastrServiceService } from './toastr.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -8,14 +9,14 @@ import { Observable } from 'rxjs';
 export class ProductServiceService {
   constructor(protected Toastrservice:ToastrServiceService) {}
 
-  private cartItems: any[] = [];
+  private cartItems: Books[] = [];
 
-  addToCart(product: any) {
+  addToCart(product: Books) {
     const storedCartItems = localStorage.getItem('cart');
 
-    const cartItems: any[] = storedCartItems ? JSON.parse(storedCartItems) : [];
+    const cartItems: Books[] = storedCartItems ? JSON.parse(storedCartItems) : [];
 
-    let changed = false;
+    let changed:boolean = false;
 
     cartItems.map((item) => {
       if (item.isbn13 === product.isbn13) {
@@ -34,27 +35,28 @@ export class ProductServiceService {
     }
   }
 
-  getDataFromLs(): any {
+  getDataFromLs() {
     const storedCartItems = localStorage.getItem('cart');
     if (storedCartItems) {
       this.cartItems = JSON.parse(storedCartItems);
+      console.log(this.cartItems,"cart itemsssssssssssssss999999999999999999999999999999999999999999999999999999999999")
       return this.cartItems;
     }
     return;
   }
 
-  decrement(localStorageItem: any) {
+  decrement(localStorageItem: Books) {
       localStorage.setItem('cart', JSON.stringify(localStorageItem));
       this.Toastrservice.showSuccess(' Quantity Decremented.');
     
   }
 
-  increment(localStorageItem:any){
+  increment(localStorageItem:Books){
     localStorage.setItem('cart', JSON.stringify(localStorageItem));
     this.Toastrservice.showSuccess(' Quantity Incremented.');
   }
 
-  deleteItem(index:number,localStorageItem:any){
+  deleteItem(index:number,localStorageItem:Books[]){
     localStorageItem.splice(index, 1);
     localStorage.setItem('cart', JSON.stringify(localStorageItem));
     this.Toastrservice.showError('product is deleted')

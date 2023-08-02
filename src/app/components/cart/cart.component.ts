@@ -12,13 +12,12 @@ export class CartComponent {
   constructor(
     private productService: ProductServiceService,
     private service: BookApiServiceService,
-    private ToastrService : ToastrServiceService
   ) {}
 
   public count!: number;
   
 
-  cartItems: any[] = [];
+  // cartItems: any[] = [];
   localStorageItem: any;
   // localStorageItem!: any[];
 
@@ -51,7 +50,6 @@ export class CartComponent {
     if (this.count <= 0) {
       this.count = 1;
     }
-
   }
 
   deleteItem(index: number) {
